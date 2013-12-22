@@ -14,8 +14,12 @@
 		</step>
 	</job>
 
-	<bean id="reader" class="example.ExampleItemReader" />
-	<bean id="writer" class="example.ExampleItemWriter" />
+	<bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+                <property name="resource" value="#{jobExecutionContext['input.file.name']}" />
+        </bean>
+	<bean id="writer" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+                <property name="resource" value="#{jobExecutionContext['output.file.name']}" />
+        </bean>
 	
 	<!-- enables the functionality of JobOperator.startNextInstance(jobName) -->
 	<bean id="jobParametersIncrementer" class="org.springframework.batch.core.launch.support.RunIdIncrementer" />
@@ -23,7 +27,7 @@
 	<bean id="simpleStep"
 		class="org.springframework.batch.core.step.item.SimpleStepFactoryBean"
 		abstract="true">
-		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionManager" ref="rl-transactionManager" />
 		<property name="jobRepository" ref="jobRepository" />
 		<property name="startLimit" value="100" />
 		<property name="commitInterval" value="1" />
