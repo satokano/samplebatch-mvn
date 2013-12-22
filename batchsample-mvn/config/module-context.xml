@@ -15,14 +15,14 @@
 	</job>
 
 	<bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
-                <property name="resource" value="#{jobExecutionContext['input.file.name']}" />
+                <property name="resource" value="#{jobParameters['input.file.name']}" />
                 <property name="lineMapper">
                         <bean class="org.springframework.batch.item.file.mapping.PassThroughLineMapper" />
                 </property>
         </bean>
         
 	<bean id="writer" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
-                <property name="resource" value="#{jobExecutionContext['output.file.name']}" />
+                <property name="resource" value="#{jobParameters['output.file.name']}" />
                 <property name="lineAggregator">
                         <bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator" />
                 </property>
