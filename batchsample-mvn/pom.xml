@@ -89,11 +89,11 @@
         </dependency>
 
 <!-- Lucene -->
-<dependency>
+<!-- dependency>
 	<groupId>org.apache.lucene</groupId>
 	<artifactId>lucene-parent</artifactId>
 	<version>4.0.0</version>
-</dependency>
+</dependency -->
 
         <!-- testing -->
         <dependency>
