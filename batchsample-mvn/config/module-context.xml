@@ -9,10 +9,24 @@
 	<job id="job1" xmlns="http://www.springframework.org/schema/batch" incrementer="jobParametersIncrementer">
 		<step id="step1" parent="simpleStep">
 			<tasklet>
-				<chunk reader="reader" writer="writer" />
+				<chunk reader="reader1" writer="writer" />
 			</tasklet>
 		</step>
 	</job>
+
+	<bean id="reader1" class="org.springframework.batch.item.database.JdbcPagingItemReader" scope="step">
+		<property name="dataSource" ref="sqliteDataSource" />
+		<property name="fetchSize" value="10" /> <!-- pageSize分取ってきたあと、さらにメモリ上に展開する量？ -->
+		<property name="maxItemCount" value="10000" /> <!-- クエリ×N回で取ってくる、全量に対する上限 -->
+		<property name="pageSize" value="1000" /> <!-- 1クエリ中のselect...limit xxxxとかで制限する1ページの量 -->
+		<property name="queryProvider" ref="ticketQueryProvider" />
+		<property name="rowMapper" ref="ticketRowMapper" />
+	</bean>
+	<bean id="ticketQueryProvider" class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
+		<property name="dataSource" ref="sqliteDataSource" />
+		<property name="selectClause" value="SELECT *" />
+	</bean>
+	<bean id="ticketRowMapper" class="satokano.sample.hoge" />
 
 	<bean id="reader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
 		<property name="resource" value="#{jobParameters['input.file.name']}" />

@@ -38,6 +38,11 @@
 		<property name="username" value="${batch.jdbc.user}" />
 		<property name="password" value="${batch.jdbc.password}" />
 	</bean -->
+	
+	<bean id="sqliteDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.sqlite.JDBC" />
+		<property name="url" value="file:./data/trac_pmr.db" />
+	</bean>
 
 	<bean id="rl-transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager">
 	</bean>
