@@ -25,6 +25,7 @@
 	<bean id="ticketQueryProvider" class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 		<property name="dataSource" ref="sqliteDataSource" />
 		<property name="selectClause" value="SELECT *" />
+		<property name="fromClause" value="FROM ticket" />
 	</bean>
 	<bean id="ticketRowMapper" class="satokano.sample.hoge" />
 
